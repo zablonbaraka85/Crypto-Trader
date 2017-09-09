@@ -1,16 +1,14 @@
 
+var apiKeyString = "7b05b6d881c4426990d7e1a6a466229e";
+var tickerString = "btc-eth";
 
-updateStats();
+var baseCurrencyString = tickerString.substring(0,4);
+var tradeCurrencyString = tickerString.substring(5,8);
 
-var global = this;
+updateStats(tickerString);
+updateMyBalance(apiKeyString, baseCurrencyString);
 
-apikey = "";
-ticker = "btc-eth";
-
-var baseCurrency = ticker.substring(1,4);
-var tradeCurrency = ticker.substring(5,8);
-
-function updateStats() {
+function updateStats(ticker) {
 	getJSON("https://bittrex.com/api/v1.1/public/getmarketsummary?market=" + ticker,
 		function(err, data) {
 			if(err != null){
@@ -29,22 +27,22 @@ function updateStats() {
 }
 
 //function not working for some reason
-function updateMyBalance() {
-	getJSON("https://bittrex.com/api/v1.1/account/getbalance?apikey=" + apikey + "&currency=" + baseCurrency,
+function updateMyBalance(apiKey, baseCurrency) {
+	getJSON("https://bittrex.com/api/v1.1/account/getbalance?apikey=" + apiKey + "&currency=" + baseCurrency,
 		function(err, data) {
 			if(err != null){
 				console.log('something went wrong: ' + err);
 				customAlert("Warning: Balance API Endpoint not connected. Error: " + err, 10000, "alert alert-warning");
 			}else{
 				customAlert("Success: Balance API Endpoint connected.", 3000, "alert alert-success");
-				document.getElementById("baseCurrency").innerHTML = baseCurrency + " " + data.result.Available;
+				document.getElementById("baseCurrency").innerHTML = baseCurrency + " " + data.success;
 			}
 		});
 }
 
 // Set Bittrex Key to A variable
 function setBittrexKey(){
-	var bittrexKey = document.getElementById("bittrexKey").innerHTML;
+	apiKeyString = document.getElementById("bittrexKey").innerHTML;
 }
 
 
