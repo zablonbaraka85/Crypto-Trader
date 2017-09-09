@@ -3,29 +3,32 @@
   <head>
     <meta charset="UTF-8">
     <title>Crypto Trader</title>
-  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
   </head>
   <body>
     
-    <div class="row" id="header"> 
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'userDetails')" id="defaultTab">User Details</button>
+      <button class="tablinks" onclick="openTab(event, 'currencySettings')">Currency Settings</button>
+      <button class="tablinks" onclick="openTab(event, 'keySettings')">Key Settings</button>
+      
+      
+    </div>
+
+    
+    <!-- <div class="row" id="header"> 
       <div class=col-sm-1></div>
       <div class=col-sm-10>
       <h1>Crypto Trader</h1>
       </div>
       <div class=col-sm-1></div>
     </div>
-
-
-    <div class="row" id="subHeader">
-      <div class=col-sm-1></div>
-      <div class=col-sm-10 id="alerts">
-      </div>
-      <div class=col-sm-1></div>
-    </div>
-
-    <div class="row" id="userDetails">
+ -->
+   
+    <div class="row tabcontent" id="keySettings">
       <div class="col-sm-1"></div>
       <div class="col-sm-10">
       <div class="panel panel-info">
@@ -46,7 +49,20 @@
       <div class="col-sm-1"></div>
     </div>
 
-    <div class="row">
+    <div class="row tabcontent" id="currencySettings">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10">
+      <div class="panel panel-info">
+        <div class="panel-heading">Currency Settings</div>
+        <div class="panel-body">
+         
+        </div>
+      </div>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+
+    <div class="row tabcontent" id="userDetails">
       <div class="col-sm-1"></div>
       <div class="col-sm-10">
         <div class="panel panel-info">
@@ -68,6 +84,13 @@
       <div class="col-sm-1"> </div>
     </div>
 
+    <div class="row" id="subHeader">
+      <div class=col-sm-1></div>
+      <div class=col-sm-10 id="alerts">
+      </div>
+      <div class=col-sm-1></div>
+    </div>
+
     <div class="row">
     <div class="col-sm-1"></div>
     <div class="col-sm-5" id="baseCurrency"></div>
@@ -78,5 +101,8 @@
   </body>
 
   <script src="js/index.js"></script>
-
+  <script>
+    document.getElementById("defaultTab").click();
+  </script>
+  
 </html>
