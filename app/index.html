@@ -2,8 +2,8 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
-
+    <title>Crypto Trader</title>
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
   </head>
@@ -25,10 +25,31 @@
       <div class=col-sm-1></div>
     </div>
 
+    <div class="row" id="userDetails">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10">
+      <div class="panel panel-info">
+        <div class="panel-heading">User Info</div>
+        <div class="panel-body">
+          <div class="col-sm-9">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input id="bittrexKey" type="text" class="form-control" name="bittrexKey" placeholder="Bittrex API Key">
+          </div>
+          </div>
+          <div class="col-sm-3">
+          <button type="button" class="btn btn-info" onClick="setBittrexKey">Set Key</button>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+
     <div class="row">
       <div class="col-sm-1"></div>
       <div class="col-sm-10">
-        <div class="panel panel-default">
+        <div class="panel panel-info">
           <div class="panel-heading">Market Info</div>
           <div class="panel-body">
             <div class=col-sm-6> 

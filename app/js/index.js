@@ -2,15 +2,16 @@
 
 updateStats();
 
-var apikey = "7b05b6d881c4426990d7e1a6a466229e";
+var global = this;
 
-var ticker = "btc-eth";
+apikey = "";
+ticker = "btc-eth";
 
 var baseCurrency = ticker.substring(1,4);
 var tradeCurrency = ticker.substring(5,8);
 
 function updateStats() {
-	getJSON("https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-eth",
+	getJSON("https://bittrex.com/api/v1.1/public/getmarketsummary?market=" + ticker,
 		function(err, data) {
 			if(err != null){
 				console.log('somethinig went wrong: ' + err);
@@ -40,6 +41,13 @@ function updateMyBalance() {
 			}
 		});
 }
+
+// Set Bittrex Key to A variable
+function setBittrexKey(){
+	var bittrexKey = document.getElementById("bittrexKey").innerHTML;
+}
+
+
 
 // REST api function to connect to json endpoints.
 function getJSON(url, callback) {
