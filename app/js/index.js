@@ -1,13 +1,14 @@
+// Set Globals
+var apiKeyString 		= "";
+var tickerString 		= "usdt-btc";
+var baseCurrencyString 	= tickerString.substring(0, tickerString.indexOf('-'));
+var tradeCurrencyString = tickerString.substring(tickerString.indexOf('-') + 1);
 
-var apiKeyString = "";
-var tickerString = "usdt-eth";
-
-var baseCurrencyString = tickerString.substring(0,4);
-var tradeCurrencyString = tickerString.substring(5,8);
-
+// Call Updates
 updateStats(tickerString);
 updateMyBalance(apiKeyString, baseCurrencyString);
 
+// Updates market stats with the given ticker
 function updateStats(ticker) {
 	getJSON("https://bittrex.com/api/v1.1/public/getmarketsummary?market=" + ticker,
 		function(err, data) {
