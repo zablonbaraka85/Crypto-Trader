@@ -37,6 +37,7 @@ function updateMyBalance(apiKey, baseCurrency) {
 			}else{
 				customAlert("Success: Balance API Endpoint connected.", 3000, "alert alert-success");
 				document.getElementById("baseCurrency").innerHTML = baseCurrency + " " + data.success;
+				document.getElementById("tradeCurrency").innerHTML = tradeCurrencyString;
 			}
 		});
 }
