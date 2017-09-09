@@ -7,9 +7,19 @@ var tickerString 		= "btc-eth";
 var baseCurrencyString 	= tickerString.substring(0, tickerString.indexOf('-'));
 var tradeCurrencyString = tickerString.substring(tickerString.indexOf('-') + 1);
 
+var debug = false;
+
 // Call Updates
-updateStats(tickerString);
-updateMyBalance(apiKeyString, secretKeyString, baseCurrencyString, tradeCurrencyString);
+
+
+update();
+
+function update() {
+	updateStats(tickerString);
+	updateMyBalance(apiKeyString, secretKeyString, baseCurrencyString, tradeCurrencyString);
+	setTimeout(update, 5000);
+}
+
 
 
 // Updates market stats with the given ticker
@@ -18,9 +28,13 @@ function updateStats(ticker) {
 		function(err, data) {
 			if(err != null){
 				console.log('somethinig went wrong: ' + err);
-				customAlert("Warning: API Endpoint not connected.", 10000, "alert alert-warning");
+				if(debug == true){
+					customAlert("Warning: API Endpoint not connected.", 10000, "alert alert-warning");					
+				}
 			} else {
-				customAlert("Success: API Endpoint connected.",3000, "alert alert-success");
+				if(debug == true){
+					customAlert("Success: API Endpoint connected.",3000, "alert alert-success");
+				}
 				document.getElementById("marketName").innerHTML = "Market Name: " + data.result[0].MarketName;
 				document.getElementById("high").innerHTML = "24hr High: " + data.result[0].High + " BTC";
 				document.getElementById("low").innerHTML = "24hr Low: " + data.result[0].Low + " BTC";
@@ -53,7 +67,9 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 				console.log('something went wrong: ' + err);
 				//customAlert("Warning: Balance API Endpoint not connected. Error: " + err, 10000, "alert alert-warning");
 			}else{
-				customAlert("Success: Balance API Endpoint connected.", 3000, "alert alert-success");
+				if(debug == true){
+					customAlert("Success: Balance API Endpoint connected.", 3000, "alert alert-success");
+				}
 				document.getElementById("base-title").innerHTML = baseCurrency.toUpperCase() + " Account Summary";
 				document.getElementById("base-balance").innerHTML = "Balance: " + data.result.Balance + " " + baseCurrencyString.toUpperCase();
 				document.getElementById("base-available").innerHTML = "Available: " + data.result.Available + " " + baseCurrencyString.toUpperCase();
