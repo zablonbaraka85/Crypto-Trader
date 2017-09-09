@@ -54,10 +54,12 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 				//customAlert("Warning: Balance API Endpoint not connected. Error: " + err, 10000, "alert alert-warning");
 			}else{
 				customAlert("Success: Balance API Endpoint connected.", 3000, "alert alert-success");
-				document.getElementById("baseCurrency").innerHTML = baseCurrency.toUpperCase() + " Balance: " + data.result.Available;
-				// data.result.Balance
-				// data.result.Pending
-				// data.result.Address
+				document.getElementById("base-title").innerHTML = baseCurrency.toUpperCase() + " Account Summary";
+				document.getElementById("base-balance").innerHTML = "Balance: " + data.result.Balance + " " + baseCurrencyString.toUpperCase();
+				document.getElementById("base-available").innerHTML = "Available: " + data.result.Available + " " + baseCurrencyString.toUpperCase();
+				document.getElementById("base-address").innerHTML =  "Pending: " + data.result.Pending + " " + baseCurrencyString.toUpperCase();
+				document.getElementById("base-pending").innerHTML = "Address: " + data.result.CryptoAddress;
+				
 			}
 		});
 	
@@ -79,7 +81,12 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 			if(err != null){
 				console.log("something went wrong: " + err);
 			}else {
-				document.getElementById("tradeCurrency").innerHTML = tradeCurrency.toUpperCase() + " Balance: " + data.result.Available;
+				document.getElementById("trade-title").innerHTML = tradeCurrency.toUpperCase() + " Account Summary";
+				document.getElementById("trade-balance").innerHTML = "Balance: " + data.result.Balance + " " + tradeCurrencyString.toUpperCase();
+				document.getElementById("trade-available").innerHTML = "Available: " + data.result.Available + " " + tradeCurrencyString.toUpperCase();
+				document.getElementById("trade-address").innerHTML =  "Pending: " + data.result.Pending + " " + tradeCurrencyString.toUpperCase();
+				document.getElementById("trade-pending").innerHTML = "Address: " + data.result.CryptoAddress;
+				
 				// data.result.Balance
 				// data.result.Pending
 				// data.result.Address

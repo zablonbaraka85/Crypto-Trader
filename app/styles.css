@@ -34,6 +34,10 @@ div.tab button.active {
     animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
+.account{
+    margin-top: 20px;
+}
+
 @-webkit-keyframes fadeEffect {
     from {opacity: 0;}
     to {opacity: 1;}
