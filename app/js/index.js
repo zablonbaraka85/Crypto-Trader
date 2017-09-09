@@ -1,5 +1,5 @@
 
-var apiKeyString = "7b05b6d881c4426990d7e1a6a466229e";
+var apiKeyString = "";
 var tickerString = "btc-eth";
 
 var baseCurrencyString = tickerString.substring(0,4);
