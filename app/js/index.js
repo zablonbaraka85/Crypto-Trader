@@ -1,12 +1,16 @@
+jsSHA = require("jssha");
+
 // Set Globals
-var apiKeyString 		= "";
-var tickerString 		= "usdt-btc";
+var apiKeyString 		= "7b05b6d881c4426990d7e1a6a466229e";
+var secretKeyString		= "d3484fe7b49f4ec3a8bef064d59bef03";
+var tickerString 		= "btc-eth";
 var baseCurrencyString 	= tickerString.substring(0, tickerString.indexOf('-'));
 var tradeCurrencyString = tickerString.substring(tickerString.indexOf('-') + 1);
 
 // Call Updates
 updateStats(tickerString);
-updateMyBalance(apiKeyString, baseCurrencyString);
+updateMyBalance(apiKeyString, secretKeyString, baseCurrencyString, tradeCurrencyString);
+
 
 // Updates market stats with the given ticker
 function updateStats(ticker) {
@@ -28,26 +32,71 @@ function updateStats(ticker) {
 }
 
 //function not working for some reason
-function updateMyBalance(apiKey, baseCurrency) {
-	getJSON("https://bittrex.com/api/v1.1/account/getbalance?apikey=" + apiKey + "&currency=" + baseCurrency,
+function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
+
+	var nonce = Math.round((new Date()).getTime() / 1000);
+
+	var uri = "https://bittrex.com/api/v1.1/account/getbalance?apikey=" + apiKey + "&currency=" + baseCurrency + "&nonce=" + nonce; 
+
+	var shaObj = new jsSHA("SHA-512", "TEXT");
+	shaObj.setHMACKey(secretKey, "TEXT");
+	shaObj.update(uri);
+	var hash = shaObj.getHMAC("HEX");
+	
+	// remove when done
+	console.log(uri);
+	console.log(hash);
+	
+	getSignedJSON(uri, hash,
 		function(err, data) {
 			if(err != null){
 				console.log('something went wrong: ' + err);
-				customAlert("Warning: Balance API Endpoint not connected. Error: " + err, 10000, "alert alert-warning");
+				//customAlert("Warning: Balance API Endpoint not connected. Error: " + err, 10000, "alert alert-warning");
 			}else{
 				customAlert("Success: Balance API Endpoint connected.", 3000, "alert alert-success");
-				document.getElementById("baseCurrency").innerHTML = baseCurrency + " " + data.success;
-				document.getElementById("tradeCurrency").innerHTML = tradeCurrencyString;
+				document.getElementById("baseCurrency").innerHTML = baseCurrency.toUpperCase() + " Balance: " + data.result.Available;
+				// data.result.Balance
+				// data.result.Pending
+				// data.result.Address
 			}
 		});
+	
+	var nonce2 = Math.round((new Date()).getTime() / 1000);
+
+	var uri2 = "https://bittrex.com/api/v1.1/account/getbalance?apikey=" + apiKey + "&currency=" + tradeCurrency + "&nonce=" + nonce2; 
+
+	var shaObj2 = new jsSHA("SHA-512", "TEXT");
+	shaObj2.setHMACKey(secretKey, "TEXT");
+	shaObj2.update(uri2);
+	var hash2 =shaObj2.getHMAC("HEX");
+
+	// remove when done
+	console.log(uri2);
+	console.log(hash2);
+
+	getSignedJSON(uri2, hash2,
+		function(err, data){
+			if(err != null){
+				console.log("something went wrong: " + err);
+			}else {
+				document.getElementById("tradeCurrency").innerHTML = tradeCurrency.toUpperCase() + " Balance: " + data.result.Available;
+				// data.result.Balance
+				// data.result.Pending
+				// data.result.Address
+			}
+		});
+
 }
 
-// Set Bittrex Key to A variable
+// Set Bittrex Key to a variable
 function setBittrexKey(){
 	apiKeyString = document.getElementById("bittrexKey").innerHTML;
 }
 
-
+// Set Bittrex Secret Key to a variable
+function setBittrexSecret(){
+	secretKeyString = document.getElementById("secretKeyString").innerHTML;
+}
 
 // REST api function to connect to json endpoints.
 function getJSON(url, callback) {
@@ -63,8 +112,23 @@ function getJSON(url, callback) {
     }
   };
   xhr.send();
-};
+}
 
+function getSignedJSON(url, apiSign, callback){
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', url, true);
+	xhr.responseType = 'json';
+	xhr.setRequestHeader("apisign", apiSign);
+	xhr.onload = function() {
+		var status = xhr.status;
+		if (status == 200){
+			callback(null, xhr.response);
+		} else{
+			callback(status);
+		}
+	};
+	xhr.send();
+}
 
 // Alerts show up in the alerts section.
 function customAlert(msg, duration, className){
