@@ -28,13 +28,7 @@ function updateStats(ticker) {
 		function(err, data) {
 			if(err != null){
 				console.log('somethinig went wrong: ' + err);
-				if(debug == true){
-					customAlert("Warning: API Endpoint not connected.", 10000, "alert alert-warning");					
-				}
 			} else {
-				if(debug == true){
-					customAlert("Success: API Endpoint connected.",3000, "alert alert-success");
-				}
 				document.getElementById("marketName").innerHTML = "Market Name: " + data.result[0].MarketName;
 				document.getElementById("high").innerHTML = "24hr High: " + data.result[0].High + " BTC";
 				document.getElementById("low").innerHTML = "24hr Low: " + data.result[0].Low + " BTC";
@@ -49,7 +43,6 @@ function updateStats(ticker) {
 function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 
 	var nonce = Math.round((new Date()).getTime() / 1000);
-
 	var uri = "https://bittrex.com/api/v1.1/account/getbalance?apikey=" + apiKey + "&currency=" + baseCurrency + "&nonce=" + nonce; 
 
 	var shaObj = new jsSHA("SHA-512", "TEXT");
@@ -65,11 +58,7 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 		function(err, data) {
 			if(err != null){
 				console.log('something went wrong: ' + err);
-				//customAlert("Warning: Balance API Endpoint not connected. Error: " + err, 10000, "alert alert-warning");
 			}else{
-				if(debug == true){
-					customAlert("Success: Balance API Endpoint connected.", 3000, "alert alert-success");
-				}
 				document.getElementById("base-title").innerHTML = baseCurrency.toUpperCase() + " Account Summary";
 				document.getElementById("base-balance").innerHTML = "Balance: " + data.result.Balance + " " + baseCurrencyString.toUpperCase();
 				document.getElementById("base-available").innerHTML = "Available: " + data.result.Available + " " + baseCurrencyString.toUpperCase();
@@ -80,17 +69,12 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 		});
 	
 	var nonce2 = Math.round((new Date()).getTime() / 1000);
-
 	var uri2 = "https://bittrex.com/api/v1.1/account/getbalance?apikey=" + apiKey + "&currency=" + tradeCurrency + "&nonce=" + nonce2; 
 
 	var shaObj2 = new jsSHA("SHA-512", "TEXT");
 	shaObj2.setHMACKey(secretKey, "TEXT");
 	shaObj2.update(uri2);
 	var hash2 =shaObj2.getHMAC("HEX");
-
-	// remove when done
-	console.log(uri2);
-	console.log(hash2);
 
 	getSignedJSON(uri2, hash2,
 		function(err, data){
@@ -102,10 +86,6 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 				document.getElementById("trade-available").innerHTML = "Available: " + data.result.Available + " " + tradeCurrencyString.toUpperCase();
 				document.getElementById("trade-address").innerHTML =  "Pending: " + data.result.Pending + " " + tradeCurrencyString.toUpperCase();
 				document.getElementById("trade-pending").innerHTML = "Address: " + data.result.CryptoAddress;
-				
-				// data.result.Balance
-				// data.result.Pending
-				// data.result.Address
 			}
 		});
 
