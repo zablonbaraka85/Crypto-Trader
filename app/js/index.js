@@ -14,11 +14,13 @@ var debug = false;
 
 update();
 
+
+openOrders(apiKeyString,secretKeyString,tickerString);
+
 function update() {
 	updateStats(tickerString);
 	updateMyBalance(apiKeyString, secretKeyString, baseCurrencyString, tradeCurrencyString);
 	updateBuySellInfo(baseCurrencyString, tradeCurrencyString);
-
 
 	setTimeout(update, 500);
 }
@@ -124,6 +126,49 @@ function sendBuyOrder(apiKey, secretKey, ticker, quantity, rate) {
 					customAlert("<b>Success:</b> Buy order placed!", 2000, "alert alert-success");
 				} else {
 					customAlert("<b>Error: </b>" + data.message, 2000, "alert alert-danger");
+				}
+			}
+		});
+}
+
+
+
+// Current Open Orders
+var openOrders = [];
+
+// Checks Updates Open Orders List and Styler List
+function openOrders(apiKey, secretKey, ticker) {
+	var nonce = Math.round((new Date()).getTime() / 1000);
+	var uri = "https://bittrex.com/api/v1.1/market/getopenorders?apikey=" + apiKey +"&market="+ ticker + "&nonce=" + nonce;
+
+	var shaObj = new jsSHA("SHA-512", "TEXT");
+	shaObj.setHMACKey(secretKey, "TEXT");
+	shaObj.update(uri);
+	var hash = shaObj.getHMAC("HEX");
+
+	console.log(uri);
+	console.log(hash);
+
+	getSignedJSON(uri, hash,
+		function(err, data) {
+			if(err != null) {
+				console.log("Something went wrong: " + err);
+			} else if(data.success == "true" && data.result.length > 0) {
+				for(var i = 0; i < openOrders.length; i++){
+					openOrders[i].parentNode.removeChild(openOrders[i]);
+				}
+
+				for(var i = 0; i < data.result.length; i++){
+					var styler = document.createElement("div");
+					styler.className = "panel panel-body";
+					styler.innerHTML = "OrderID: "  + data.result[i].OrderUuid + 
+									" \nExchange: " + data.result[i].Exchange +
+									" \nQuantity: " + data.result[i].Quantity +
+									" \nQuantityRemaining: " + data.result[i].QuantityRemaining +
+									" \nOpened: " + data.result[i].Opened +
+									" \nPrice: " + data.result[i].Price +
+									" \nPrice Per Unit: " + data.result[i].PricePerUnit;
+					openOrders.push(styler);
 				}
 			}
 		});
