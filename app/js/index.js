@@ -91,6 +91,10 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 
 }
 
+function updateOrders{
+	
+}
+
 // Set Bittrex Key to a variable
 function setBittrexKey(){
 	apiKeyString = document.getElementById("bittrexKey").innerHTML;
