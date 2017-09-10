@@ -93,9 +93,12 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 
 }
 
+<<<<<<< HEAD
 function updateOrders() {
 	
 }
+=======
+>>>>>>> da30aa9fd2df2caa4899456e4c2c3e6112f41aec
 
 function updateBuySellInfo(baseCurrency, tradeCurrency){
 	document.getElementById("buyPanel").innerHTML = "Buy " + tradeCurrency.toUpperCase(); 
