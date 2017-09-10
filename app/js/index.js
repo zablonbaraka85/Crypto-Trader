@@ -19,7 +19,8 @@ function update() {
 	updateMyBalance(apiKeyString, secretKeyString, baseCurrencyString, tradeCurrencyString);
 	updateBuySellInfo(baseCurrencyString, tradeCurrencyString);
 
-	setTimeout(update, 5000);
+
+	setTimeout(update, 500);
 }
 
 
@@ -51,10 +52,6 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 	shaObj.setHMACKey(secretKey, "TEXT");
 	shaObj.update(uri);
 	var hash = shaObj.getHMAC("HEX");
-	
-	// remove when done
-	console.log(uri);
-	console.log(hash);
 	
 	getSignedJSON(uri, hash,
 		function(err, data) {
@@ -93,6 +90,73 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 
 }
 
+function placeBuyOrder() {
+	sendBuyOrder(apiKeyString, secretKeyString, tickerString, 
+		document.getElementById("buyPanelUnits").value,
+		document.getElementById("buyPanelPrice").value);
+}
+
+function placeSellOrder() {
+	sendSellOrder(apiKeyString, secretKeyString, tickerString,
+		document.getElementById("sellPanelUnits").value,
+		document.getElementById("sellPanelPrice").value);
+}
+
+function sendBuyOrder(apiKey, secretKey, ticker, quantity, rate) {
+	var nonce = Math.round((new Date()).getTime() / 1000);
+	var uri = "https://bittrex.com/api/v1.1/market/buylimit?apikey=" + apiKey + "&market=" + ticker + "&quantity="+ quantity + "&rate="+ rate + "&nonce=" + nonce;
+
+	var shaObj = new jsSHA("SHA-512", "TEXT");
+	shaObj.setHMACKey(secretKey, "TEXT");
+	shaObj.update(uri);
+	var hash = shaObj.getHMAC("HEX");
+
+	// DEBUG
+	console.log(uri);
+	console.log(hash);
+	
+	getSignedJSON(uri, hash,
+		function(err, data){
+			if(err != null){
+				console.log("Something went wrong: " + err);
+			} else {
+				if(data.success){
+					customAlert("<b>Success:</b> Buy order placed!", 2000, "alert alert-success");
+				} else {
+					customAlert("<b>Error: </b>" + data.message, 2000, "alert alert-danger");
+				}
+			}
+		});
+}
+
+function sendSellOrder(apiKey, secretKey, ticker, quantity, rate) {
+	var nonce = Math.round((new Date()).getTime() / 1000);
+	var uri = "https://bittrex.com/api/v1.1/market/buylimit?apikey=" + apiKey + "&market=" + ticker + "&quantity="+ quantity + "&rate="+ rate + "&nonce=" + nonce;
+
+	var shaObj = new jsSHA("SHA-512", "TEXT");
+	shaObj.setHMACKey(secretKey, "TEXT");
+	shaObj.update(uri);
+	var hash = shaObj.getHMAC("HEX");
+
+	// DEBUG
+	console.log(uri);
+	console.log(hash);
+
+	getSignedJSON(uri, hash,
+		function(err, data) {
+			if(err != null){
+				console.log("Something went wrong: " + err);
+
+			} else {
+				if(data.success){
+					customAlert("<b>Success:</b> Sell order placed!",2000, "alert alert-success");
+				} else {
+					customAlert("<b>Error: </b>" + data.message,2000, "alert alert-danger");
+				}
+			}
+		});
+}
+
 function updateOrders() {
 	
 }
@@ -109,6 +173,10 @@ function updateBuySellInfo(baseCurrency, tradeCurrency){
 
 	document.getElementById("baseCurrencyBuyTotal").innerHTML = baseCurrency.toUpperCase();
 	document.getElementById("baseCurrencySellTotal").innerHTML = baseCurrency.toUpperCase();
+
+	console.log(document.getElementById("buyPanelPrice").value * document.getElementById("buyPanelUnits").value);
+	document.getElementById("buyPanelTotal").value = document.getElementById("buyPanelPrice").value * document.getElementById("buyPanelUnits").value;
+	document.getElementById("sellPanelTotal").value = document.getElementById("sellPanelPrice").value * document.getElementById("sellPanelUnits").value; 
 }
 
 // Set Bittrex Key to a variable
