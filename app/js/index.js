@@ -17,6 +17,8 @@ update();
 function update() {
 	updateStats(tickerString);
 	updateMyBalance(apiKeyString, secretKeyString, baseCurrencyString, tradeCurrencyString);
+	updateBuySellInfo(baseCurrencyString, tradeCurrencyString);
+
 	setTimeout(update, 5000);
 }
 
@@ -91,8 +93,22 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 
 }
 
-function updateOrders{
+function updateOrders() {
 	
+}
+
+function updateBuySellInfo(baseCurrency, tradeCurrency){
+	document.getElementById("buyPanel").innerHTML = "Buy " + tradeCurrency.toUpperCase(); 
+	document.getElementById("sellPanel").innerHTML = "Sell " + tradeCurrency.toUpperCase();
+
+	document.getElementById("tradeCurrencyBuy").innerHTML = tradeCurrency.toUpperCase();
+	document.getElementById("tradeCurrencySell").innerHTML = tradeCurrency.toUpperCase();
+
+	document.getElementById("baseCurrencyBuy").innerHTML = baseCurrency.toUpperCase();
+	document.getElementById("baseCurrencySell").innerHTML = baseCurrency.toUpperCase();
+
+	document.getElementById("baseCurrencyBuyTotal").innerHTML = baseCurrency.toUpperCase();
+	document.getElementById("baseCurrencySellTotal").innerHTML = baseCurrency.toUpperCase();
 }
 
 // Set Bittrex Key to a variable

@@ -65,23 +65,102 @@
 
 
       <!-- PUT MARKET ORDER CODE HERE -->
+      <div class="col-sm-1"></div>
 
+      <div class="col-sm-10">
       <div class="panel panel-info">
         <div class="panel-heading" id="buyPanel"> </div>
         <div class="panel-body">
-          
+
+        <div class="row">
+        <div class="col-sm-1"><h5>Units:</h5> </div>
+        <div class="col-sm-11">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="0.0000" aria-describedby="tradeCurrencyBuy" id="buyPanelUnits">
+            <span class="input-group-addon" id="tradeCurrencyBuy"></span>
+            </div>
+         </div>
+         </div>
+
+         <br>
+
+         <div class="row">
+         <div class="col-sm-1"><h5>Price:</h5> </div>
+        <div class="col-sm-11">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="0.0000" aria-describedby="baseCurrencyBuy" id="buyPanelPrice">
+            <span class="input-group-addon" id="baseCurrencyBuy"></span>
+            </div>
+         </div>
+         </div>
+
+         <br>
+
+         <div class="row">
+         <div class="col-sm-1"><h5>Total:</h5> </div>
+        <div class="col-sm-9">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="0.0000" aria-describedby="baseCurrencyBuyTotal" id="buyPanelTotal">
+            <span class="input-group-addon" id="baseCurrencyBuyTotal"></span>
+            </div>
+         </div>
+         <div class="col-sm-2">
+           <button class="btn btn-info" onClick=placeBuyOrder()>Place Buy</button>
+         </div>
+         </div>
+
         </div>
       </div>
+
       <div class="panel panel-info">
         <div class="panel-heading" id="sellPanel"> </div>
         <div class="panel-body">
-          
+
+        <div class="row">
+        <div class="col-sm-1"><h5>Units:</h5> </div>
+        <div class="col-sm-11">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="0.0000" aria-describedby="tradeCurrencyBuy" id="sellPanelUnits">
+            <span class="input-group-addon" id="tradeCurrencySell"></span>
+            </div>
+         </div>
+         </div>
+
+         <br>
+
+         <div class="row">
+         <div class="col-sm-1"><h5>Price:</h5> </div>
+        <div class="col-sm-11">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="0.0000" aria-describedby="baseCurrencyBuy" id="sellPanelPrice">
+            <span class="input-group-addon" id="baseCurrencySell"></span>
+            </div>
+         </div>
+         </div>
+
+         <br>
+
+         <div class="row">
+         <div class="col-sm-1"><h5>Total:</h5> </div>
+        <div class="col-sm-9">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="0.0000" aria-describedby="baseCurrencyBuyTotal" id="sellPanelTotal">
+            <span class="input-group-addon" id="baseCurrencySellTotal"></span>
+            </div>
+         </div>
+         <div class="col-sm-2">
+           <button class="btn btn-info" onClick=placeSellOrder()>Place Sell</button>
+         </div>
+         </div>
+
         </div>
       </div>
 
+
+      <div class="col-sm-1"></div>
     </div>
 
-
+  </div>
 
 
 
