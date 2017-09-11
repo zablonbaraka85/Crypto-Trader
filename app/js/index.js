@@ -1,18 +1,8 @@
-const path = require('path')
 jsSHA = require("jssha");
-bittrexAPI = require(path.join(__dirname, './js/bittrexAPI.js'));
-//console.log(bittrexAPI.printURL('btc-eth'));
-
-
-bittrexAPI.getMarketStats('btc-eth',
-	function(err, data) {
-		console.log(data.result[0].Volume);
-	});
-
 
 // Set Globals
-var apiKeyString 		= "b3cb84d40a544d33a2b2ac1a9f6c9686";
-var secretKeyString		= "4191eabee1294637bb1a6e2fc20a713c";
+var apiKeyString 		= "7b05b6d881c4426990d7e1a6a466229e";
+var secretKeyString		= "d3484fe7b49f4ec3a8bef064d59bef03";
 var tickerString 		= "btc-eth";
 var baseCurrencyString 	= tickerString.substring(0, tickerString.indexOf('-'));
 var tradeCurrencyString = tickerString.substring(tickerString.indexOf('-') + 1);
@@ -27,11 +17,9 @@ update();
 
 openOrders(apiKeyString,secretKeyString,tickerString);
 
-
-updateMyBalance(apiKeyString, secretKeyString, baseCurrencyString, tradeCurrencyString);
-
 function update() {
 	updateStats(tickerString);
+	updateMyBalance(apiKeyString, secretKeyString, baseCurrencyString, tradeCurrencyString);
 	updateBuySellInfo(baseCurrencyString, tradeCurrencyString);
 
 	setTimeout(update, 500);
@@ -46,14 +34,12 @@ function updateStats(ticker) {
 			if(err != null){
 				console.log('somethinig went wrong: ' + err);
 			} else {
-				if(data.success){
-					document.getElementById("marketName").innerHTML = "Market Name: " + data.result[0].MarketName;
-					document.getElementById("high").innerHTML = "24hr High: " + data.result[0].High + " BTC";
-					document.getElementById("low").innerHTML = "24hr Low: " + data.result[0].Low + " BTC";
-					document.getElementById("volume").innerHTML = "24hr Volume: " + data.result[0].Volume + " BTC";
-					document.getElementById("bid").innerHTML = "Current Bid: " + data.result[0].Bid + " BTC";
-					document.getElementById("ask").innerHTML = "Current Ask: " + data.result[0].Ask + " BTC";
-				}
+				document.getElementById("marketName").innerHTML = "Market Name: " + data.result[0].MarketName;
+				document.getElementById("high").innerHTML = "24hr High: " + data.result[0].High + " BTC";
+				document.getElementById("low").innerHTML = "24hr Low: " + data.result[0].Low + " BTC";
+				document.getElementById("volume").innerHTML = "24hr Volume: " + data.result[0].Volume + " BTC";
+				document.getElementById("bid").innerHTML = "Current Bid: " + data.result[0].Bid + " BTC";
+				document.getElementById("ask").innerHTML = "Current Ask: " + data.result[0].Ask + " BTC";
 			}	
 		});
 }
@@ -68,11 +54,7 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 	shaObj.setHMACKey(secretKey, "TEXT");
 	shaObj.update(uri);
 	var hash = shaObj.getHMAC("HEX");
-
-	console.log(uri);
-	console.log(hash);
-
-	/**
+	
 	getSignedJSON(uri, hash,
 		function(err, data) {
 			if(err != null){
@@ -85,7 +67,7 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 				document.getElementById("base-pending").innerHTML = "Address: " + data.result.CryptoAddress;
 				
 			}
-		});**/
+		});
 	
 	var nonce2 = Math.round((new Date()).getTime() / 1000);
 	var uri2 = "https://bittrex.com/api/v1.1/account/getbalance?apikey=" + apiKey + "&currency=" + tradeCurrency + "&nonce=" + nonce2; 
@@ -121,6 +103,34 @@ function placeSellOrder() {
 		document.getElementById("sellPanelUnits").value,
 		document.getElementById("sellPanelPrice").value);
 }
+
+function sendBuyOrder(apiKey, secretKey, ticker, quantity, rate) {
+	var nonce = Math.round((new Date()).getTime() / 1000);
+	var uri = "https://bittrex.com/api/v1.1/market/buylimit?apikey=" + apiKey + "&market=" + ticker + "&quantity="+ quantity + "&rate="+ rate + "&nonce=" + nonce;
+
+	var shaObj = new jsSHA("SHA-512", "TEXT");
+	shaObj.setHMACKey(secretKey, "TEXT");
+	shaObj.update(uri);
+	var hash = shaObj.getHMAC("HEX");
+
+	// DEBUG
+	console.log(uri);
+	console.log(hash);
+	
+	getSignedJSON(uri, hash,
+		function(err, data){
+			if(err != null){
+				console.log("Something went wrong: " + err);
+			} else {
+				if(data.success){
+					customAlert("<b>Success:</b> Buy order placed!", 2000, "alert alert-success");
+				} else {
+					customAlert("<b>Error: </b>" + data.message, 2000, "alert alert-danger");
+				}
+			}
+		});
+}
+
 
 
 // Current Open Orders
@@ -164,38 +174,9 @@ function openOrders(apiKey, secretKey, ticker) {
 		});
 }
 
-
-function sendBuyOrder(apiKey, secretKey, ticker, quantity, rate) {
-	var nonce = Math.round((new Date()).getTime() / 1000);
-	var uri = "https://bittrex.com/api/v1.1/market/buylimit?apikey=" + apiKey + "&market=" + ticker + "&quantity="+ quantity + "&rate="+ rate + "&nonce=" + nonce;
-
-	var shaObj = new jsSHA("SHA-512", "TEXT");
-	shaObj.setHMACKey(secretKey, "TEXT");
-	shaObj.update(uri);
-	var hash = shaObj.getHMAC("HEX");
-
-	// DEBUG
-	console.log(uri);
-	console.log(hash);
-	
-	getSignedJSON(uri, hash,
-		function(err, data){
-			if(err != null){
-				console.log("Something went wrong: " + err);
-			} else {
-				if(data.success){
-					customAlert("<b>Success:</b> Buy order placed!", 2000, "alert alert-success");
-				} else {
-					customAlert("<b>Error: </b>" + data.message, 2000, "alert alert-danger");
-				}
-			}
-		});
-
-}
-
 function sendSellOrder(apiKey, secretKey, ticker, quantity, rate) {
 	var nonce = Math.round((new Date()).getTime() / 1000);
-	var uri = "https://bittrex.com/api/v1.1/market/selllimit?apikey=" + apiKey + "&market=" + ticker + "&quantity="+ quantity + "&rate="+ rate + "&nonce=" + nonce;
+	var uri = "https://bittrex.com/api/v1.1/market/buylimit?apikey=" + apiKey + "&market=" + ticker + "&quantity="+ quantity + "&rate="+ rate + "&nonce=" + nonce;
 
 	var shaObj = new jsSHA("SHA-512", "TEXT");
 	shaObj.setHMACKey(secretKey, "TEXT");
@@ -238,6 +219,7 @@ function updateBuySellInfo(baseCurrency, tradeCurrency){
 	document.getElementById("baseCurrencyBuyTotal").innerHTML = baseCurrency.toUpperCase();
 	document.getElementById("baseCurrencySellTotal").innerHTML = baseCurrency.toUpperCase();
 
+	console.log(document.getElementById("buyPanelPrice").value * document.getElementById("buyPanelUnits").value);
 	document.getElementById("buyPanelTotal").value = document.getElementById("buyPanelPrice").value * document.getElementById("buyPanelUnits").value;
 	document.getElementById("sellPanelTotal").value = document.getElementById("sellPanelPrice").value * document.getElementById("sellPanelUnits").value; 
 }
