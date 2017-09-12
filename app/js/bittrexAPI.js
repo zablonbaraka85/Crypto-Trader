@@ -85,5 +85,5 @@ module.exports = {
 	placeSellOrder: placeSellOrder,
 	getDepositHistory: getDepositHistory,
 	getWithdrawalHistory: getWithdrawalHistory,
-	getOrderHistory: getO
+	getOrderBook: getOrderBook
 }
