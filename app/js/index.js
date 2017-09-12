@@ -12,10 +12,15 @@ bittrexAPI.getMarketStats('btc-eth',
 	
 bittrexAPI.getOrderBook('btc-eth',
 	function(err, data) {
+		for(var i = 1; i < 6; i ++){
+			console.log("bidTotal" + i.toString())
+			document.getElementById("bidTotal" + i.toString()).innerHTML = data.result.buy[i].Quantity * data.result.buy[i].Rate;
+			document.getElementById("bidQuan" + i.toString()).innerHTML = data.result.buy[i].Quantity;
+			document.getElementById("bidRate" + i.toString()).innerHTML = data.result.buy[i].Rate;
+					
+		}
 
 		
-
-		console.log(data.result.buy[0].Quantity);
 		// console.log(data.result[0].buy[1].Quantity);
 		// console.log(data.result[0].buy[2].Quantity);
 		// console.log(data.result[0].buy[3].Quantity);

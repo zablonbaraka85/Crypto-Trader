@@ -197,19 +197,48 @@
       <div class="col-sm-10">
       <div class="panel panel-info">
            
-        <div class="panel-heading">Asks</div>
+        <div class="panel-heading">Bids</div>
         <div class="panel-body">
-          <div class=col-sm-6> 
-            <div id="base-balance"> </div> <br>
-            <div id="base-available"> </div>
-          </div>
-          <div class=col-sm-6>
-            <div id="base-pending"> </div> <br>
-            <div id="base-address"> </div>
-          </div>
+          <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Total</th>
+                  <th>Quantity</th>
+                  <th>Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div id="bidTotal1"></div></td>
+                  <td><div id="bidQuan1"></div></td>
+                  <td><div id="bidRate1"></div></td>
+                </tr>
+                <tr>
+                    <td><div id="bidTotal2"></div></td>
+                    <td><div id="bidQuan2"></div></td>
+                    <td><div id="bidRate2"></div></td>
+                </tr>
+                <tr>
+                    <td><div id="bidTotal3"></div></td>
+                    <td><div id="bidQuan3"></div></td>
+                    <td><div id="bidRate3"></div></td>
+                </tr>
+                <tr>
+                    <td><div id="bidTotal4"></div></td>
+                    <td><div id="bidQuan4"></div></td>
+                    <td><div id="bidRate4"></div></td>
+                </tr>
+                <tr>
+                    <td><div id="bidTotal5"></div></td>
+                    <td><div id="bidQuan5"></div></td>
+                    <td><div id="bidRate5"></div></td>
+                </tr>
+    
+              </tbody>
+            </table>
         </div>
        
-      <div class="panel-heading">Bids</div>
+      <div class="panel-heading">Asks</div>
       <div class="panel-body">
         <div class=col-sm-6> 
           <div id="trade-balance"> </div> <br>
@@ -251,6 +280,8 @@
           <div class="panel-heading" id="base-title"></div>
           <div class="panel-body">
             <div class=col-sm-6> 
+
+
               <div id="base-balance"> </div> <br>
               <div id="base-available"> </div>
             </div>
@@ -280,7 +311,7 @@
     </div>
 
     <div class="row" id="subHeader">
-      <div class=col-sm-1></div>
+      <div class= col-sm-1></div>
       <div class=col-sm-10 id="alerts">
       </div>
       <div class=col-sm-1></div>
