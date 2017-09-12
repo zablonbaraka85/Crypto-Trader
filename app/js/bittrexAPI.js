@@ -1,8 +1,8 @@
 /// This is intended to be a JavaScript wrapper for all bittrex api calls.
 jsSHA = require("jssha");
 
-function getOrderHistory(ticker, callback){
-	getSignedJSON("https://bittrex.com/api/v1.1/account/getorderhistory?market=" + ticker, secretKey, nonce, true,
+function getOrderBook(ticker, callback){
+	getSignedJSON("https://bittrex.com/api/v1.1/public/getorderbook?market=" + ticker + "&type=both", "", "", false,
 		function(err,data) {
 			callback(err, data);
 		});
@@ -83,4 +83,7 @@ module.exports = {
 	getTickerBalances: getTickerBalances,
 	placeBuyOrder: placeBuyOrder,
 	placeSellOrder: placeSellOrder,
+	getDepositHistory: getDepositHistory,
+	getWithdrawalHistory: getWithdrawalHistory,
+	getOrderHistory: getO
 }
