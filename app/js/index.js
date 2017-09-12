@@ -9,6 +9,21 @@ bittrexAPI.getMarketStats('btc-eth',
 		console.log(data.result[0].Volume);
 	});
 
+	
+bittrexAPI.getOrderBook('btc-eth',
+	function(err, data) {
+
+		
+
+		console.log(data.result.buy[0].Quantity);
+		// console.log(data.result[0].buy[1].Quantity);
+		// console.log(data.result[0].buy[2].Quantity);
+		// console.log(data.result[0].buy[3].Quantity);
+		// console.log(data.result[0].buy[4].Quantity);
+		
+	});
+
+
 
 // Set Globals
 var apiKeyString 		= "b3cb84d40a544d33a2b2ac1a9f6c9686";

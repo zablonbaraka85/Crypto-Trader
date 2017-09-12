@@ -49,7 +49,7 @@ function getTickerBalances(apiKey, secretKey, baseCurrency, tradeCurrency, callb
 }
 
 function getMarketStats(ticker, callback) {
-	getSignedJSON("https://bittrex.com/api/v1.1/public/getmarketsummary?market=" + ticker, "",false,
+	getSignedJSON("https://bittrex.com/api/v1.1/public/getmarketsummary?market=" + ticker, "","",false,
 		function(err, data) {
 			callback(err, data);
 		});
@@ -72,7 +72,7 @@ function getSignedJSON(url, secretKey, nonce, isSigned, callback) {
 		if (status == 200){
 			callback(null, xhr.response);
 		} else{
-			callback(status);
+			callback(status, null);
 		}
 	};
 	xhr.send();
