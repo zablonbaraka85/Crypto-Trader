@@ -7,10 +7,6 @@ Algorithm = require(path.join(__dirname, './js/Algorithm.js'));
 
 updateOrderBook();
 
-bittrexAPI.getMarketStats('btc-eth',
-	function(err, data) {
-		console.log(data.result[0].Volume);
-	});
 
 
 function updateOrderBook(){
