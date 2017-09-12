@@ -2,6 +2,8 @@ const path = require('path')
 jsSHA = require("jssha");
 bittrexAPI = require(path.join(__dirname, './js/bittrexAPI.js'));
 
+
+
 updateOrderBook();
 
 bittrexAPI.getMarketStats('btc-eth',
@@ -30,7 +32,8 @@ function updateOrderBook(){
 
 
 // Set Globals
-var apiKeyString 		= "b3cb84d40a544d33a2b2ac1a9f6c9686";
+// Fake keys!
+var apiKeyString 		= "b3cb84d40a544d33a2b2ac1a9f6c9686"; 
 var secretKeyString		= "4191eabee1294637bb1a6e2fc20a713c";
 var tickerString 		= "btc-eth";
 var baseCurrencyString 	= tickerString.substring(0, tickerString.indexOf('-'));
@@ -53,6 +56,8 @@ function update() {
 	updateStats(tickerString);
 	updateBuySellInfo(baseCurrencyString, tradeCurrencyString);
 	updateOrderBook();
+
+	console.log(apiKeyString);
 	
 	
 	setTimeout(update, 500);
@@ -265,7 +270,7 @@ function updateBuySellInfo(baseCurrency, tradeCurrency){
 
 // Set Bittrex Key to a variable
 function setBittrexKey(){
-	apiKeyString = document.getElementById("bittrexKey").innerHTML;
+	apiKeyString = document.getElementById("bittrexKey").value;
 }
 
 // Set Bittrex Secret Key to a variable

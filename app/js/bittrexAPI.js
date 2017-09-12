@@ -56,7 +56,6 @@ function getMarketStats(ticker, callback) {
 }
 
 function getSignedJSON(url, secretKey, nonce, isSigned, callback) {
-	console.log("hi")
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url, true);
 	xhr.responseType = 'json';
