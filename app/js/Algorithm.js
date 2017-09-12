@@ -1,6 +1,8 @@
-function algo() {
-	// code here
-	
+async function algo() {
+
+    console.log("hi im the algorithm");
+    
+
 
 }
 

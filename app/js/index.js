@@ -1,6 +1,9 @@
 const path = require('path')
 jsSHA = require("jssha");
 bittrexAPI = require(path.join(__dirname, './js/bittrexAPI.js'));
+Algorithm = require(path.join(__dirname, './js/Algorithm.js'));
+
+
 
 updateOrderBook();
 
@@ -26,11 +29,13 @@ function updateOrderBook(){
 
 
 // Set Globals
-var apiKeyString 		= "b3cb84d40a544d33a2b2ac1a9f6c9686";
+// Fake keys!
+var apiKeyString 		= "b3cb84d40a544d33a2b2ac1a9f6c9686"; 
 var secretKeyString		= "4191eabee1294637bb1a6e2fc20a713c";
 var tickerString 		= "btc-eth";
 var baseCurrencyString 	= tickerString.substring(0, tickerString.indexOf('-'));
 var tradeCurrencyString = tickerString.substring(tickerString.indexOf('-') + 1);
+var runAlgo = false; 
 
 var debug = false;
 
@@ -49,7 +54,8 @@ function update() {
 	updateStats(tickerString);
 	updateBuySellInfo(baseCurrencyString, tradeCurrencyString);
 	updateOrderBook();
-	
+
+	// console.log(apiKeyString);
 	
 	setTimeout(update, 500);
 }
@@ -242,6 +248,24 @@ function updateOrders() {
 	
 }
 
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function runAlgorithm() {
+	while(runAlgo){
+		Algorithm.algo()
+		await sleep(100);
+	}
+
+}
+
+function setAlgorithm(status){
+	runAlgo = Boolean(status)
+	runAlgorithm();	
+	console.log("hi");
+}
+
 function updateBuySellInfo(baseCurrency, tradeCurrency){
 	document.getElementById("buyPanel").innerHTML = "Buy " + tradeCurrency.toUpperCase(); 
 	document.getElementById("sellPanel").innerHTML = "Sell " + tradeCurrency.toUpperCase();
@@ -261,12 +285,13 @@ function updateBuySellInfo(baseCurrency, tradeCurrency){
 
 // Set Bittrex Key to a variable
 function setBittrexKey(){
-	apiKeyString = document.getElementById("bittrexKey").innerHTML;
+	apiKeyString = document.getElementById("bittrexKey").value;
+	console.log("other stuff works");
 }
 
 // Set Bittrex Secret Key to a variable
 function setBittrexSecret(){
-	secretKeyString = document.getElementById("secretKeyString").innerHTML;
+	secretKeyString = document.getElementById("secretKeyString").value;
 }
 
 // REST api function to connect to json endpoints.
