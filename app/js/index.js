@@ -38,6 +38,7 @@ var secretKeyString		= "4191eabee1294637bb1a6e2fc20a713c";
 var tickerString 		= "btc-eth";
 var baseCurrencyString 	= tickerString.substring(0, tickerString.indexOf('-'));
 var tradeCurrencyString = tickerString.substring(tickerString.indexOf('-') + 1);
+var runAlgo = false; 
 
 var debug = false;
 
@@ -249,6 +250,13 @@ function sendSellOrder(apiKey, secretKey, ticker, quantity, rate) {
 
 function updateOrders() {
 	
+}
+
+function runAlgorithm() {
+	while( runAlgo == true ){
+		Algorithm.algo()
+	}
+
 }
 
 function updateBuySellInfo(baseCurrency, tradeCurrency){
