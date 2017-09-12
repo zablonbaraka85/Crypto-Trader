@@ -1,7 +1,6 @@
 const path = require('path')
 jsSHA = require("jssha");
 bittrexAPI = require(path.join(__dirname, './js/bittrexAPI.js'));
-//console.log(bittrexAPI.printURL('btc-eth'));
 
 
 bittrexAPI.getMarketStats('btc-eth',
@@ -17,14 +16,15 @@ bittrexAPI.getOrderBook('btc-eth',
 			document.getElementById("bidTotal" + i.toString()).innerHTML = data.result.buy[i].Quantity * data.result.buy[i].Rate;
 			document.getElementById("bidQuan" + i.toString()).innerHTML = data.result.buy[i].Quantity;
 			document.getElementById("bidRate" + i.toString()).innerHTML = data.result.buy[i].Rate;
+			
+			console.log("bidTotal" + i.toString())
+			document.getElementById("bidTotal" + i.toString()).innerHTML = data.result.buy[i].Quantity * data.result.buy[i].Rate;
+			document.getElementById("bidQuan" + i.toString()).innerHTML = data.result.buy[i].Quantity;
+			document.getElementById("bidRate" + i.toString()).innerHTML = data.result.buy[i].Rate;
 					
 		}
 
 		
-		// console.log(data.result[0].buy[1].Quantity);
-		// console.log(data.result[0].buy[2].Quantity);
-		// console.log(data.result[0].buy[3].Quantity);
-		// console.log(data.result[0].buy[4].Quantity);
 		
 	});
 
