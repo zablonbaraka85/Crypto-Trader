@@ -2,6 +2,7 @@
 jsSHA = require("jssha");
 
 
+
 function cancelOrder(apiKey, secretKey, orderUUID){
 	var nonce = getNonce();
 	getSignedJSON("https://bittrex.com/api/v1.1/market/cancel?apikey=" + apiKey + "&uuid=" + orderUUID + "&nonce=" + nonce, "", "", true,
@@ -72,12 +73,6 @@ function getTickerBalances(apiKey, secretKey, baseCurrency, tradeCurrency, callb
 		});
 }
 
-function getCurrencies(callback) {
-	getSignedJSON("https://bittrex.com/api/v1.1/public/getcurrencies" + ticker, "", "", false,
-		function(err, data){
-			callback(err, data);
-		});
-}
 
 function getMarketStats(ticker, callback) {
 	getSignedJSON("https://bittrex.com/api/v1.1/public/getmarketsummary?market=" + ticker, "","",false,
