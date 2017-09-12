@@ -1,13 +1,28 @@
 const path = require('path')
 jsSHA = require("jssha");
 bittrexAPI = require(path.join(__dirname, './js/bittrexAPI.js'));
-//console.log(bittrexAPI.printURL('btc-eth'));
+
+updateOrderBook();
 
 
-bittrexAPI.getMarketStats('btc-eth',
+
+function updateOrderBook(){
+	bittrexAPI.getOrderBook('btc-eth',
 	function(err, data) {
-		console.log(data.result[0].Volume);
+		for(var i = 1; i < 6; i ++){
+			document.getElementById("bidTotal" + i.toString()).innerHTML = data.result.buy[i].Quantity * data.result.buy[i].Rate;
+			document.getElementById("bidQuan" + i.toString()).innerHTML = data.result.buy[i].Quantity;
+			document.getElementById("bidRate" + i.toString()).innerHTML = data.result.buy[i].Rate;
+			
+			document.getElementById("askTotal" + i.toString()).innerHTML = data.result.sell[i].Quantity * data.result.buy[i].Rate;
+			document.getElementById("askQuan" + i.toString()).innerHTML = data.result.sell[i].Quantity;
+			document.getElementById("askRate" + i.toString()).innerHTML = data.result.sell[i].Rate;
+		}
+	
 	});
+}
+
+
 
 
 // Set Globals
@@ -33,7 +48,9 @@ updateMyBalance(apiKeyString, secretKeyString, baseCurrencyString, tradeCurrency
 function update() {
 	updateStats(tickerString);
 	updateBuySellInfo(baseCurrencyString, tradeCurrencyString);
-
+	updateOrderBook();
+	
+	
 	setTimeout(update, 500);
 }
 
