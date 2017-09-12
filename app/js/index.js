@@ -1,6 +1,7 @@
 const path = require('path')
 jsSHA = require("jssha");
 bittrexAPI = require(path.join(__dirname, './js/bittrexAPI.js'));
+Algorithm = require(path.join(__dirname, './js/Algorithm.js'));
 
 
 
@@ -58,8 +59,7 @@ function update() {
 	updateBuySellInfo(baseCurrencyString, tradeCurrencyString);
 	updateOrderBook();
 
-	console.log(apiKeyString);
-	
+	// console.log(apiKeyString);
 	
 	setTimeout(update, 500);
 }
@@ -252,11 +252,22 @@ function updateOrders() {
 	
 }
 
-function runAlgorithm() {
-	while( runAlgo == true ){
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function runAlgorithm() {
+	while(runAlgo){
 		Algorithm.algo()
+		await sleep(100);
 	}
 
+}
+
+function setAlgorithm(status){
+	runAlgo = Boolean(status)
+	runAlgorithm();	
+	console.log("hi");
 }
 
 function updateBuySellInfo(baseCurrency, tradeCurrency){
@@ -279,11 +290,12 @@ function updateBuySellInfo(baseCurrency, tradeCurrency){
 // Set Bittrex Key to a variable
 function setBittrexKey(){
 	apiKeyString = document.getElementById("bittrexKey").value;
+	console.log("other stuff works");
 }
 
 // Set Bittrex Secret Key to a variable
 function setBittrexSecret(){
-	secretKeyString = document.getElementById("secretKeyString").innerHTML;
+	secretKeyString = document.getElementById("secretKeyString").value;
 }
 
 // REST api function to connect to json endpoints.
