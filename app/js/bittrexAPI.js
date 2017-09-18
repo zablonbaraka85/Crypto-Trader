@@ -124,7 +124,6 @@ function getSignedJSON(url, secretKey, nonce, isSigned, callback) {
 module.exports = {
 	getMarketSummary: getMarketSummary,
 	getMarketSummaries: getMarketSummaries,
-	getCurrencies: getCurrencies,
 	getTickerBalances: getTickerBalances,
 	placeBuyOrder: placeBuyOrder,
 	placeSellOrder: placeSellOrder,
