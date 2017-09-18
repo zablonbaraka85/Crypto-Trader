@@ -95,7 +95,7 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 	console.log(uri);
 	console.log(hash);
 
-	/**
+	
 	getSignedJSON(uri, hash,
 		function(err, data) {
 			if(err != null){
@@ -108,7 +108,7 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 				document.getElementById("base-pending").innerHTML = "Address: " + data.result.CryptoAddress;
 				
 			}
-		});**/
+		});
 	
 	var nonce2 = Math.round((new Date()).getTime() / 1000);
 	var uri2 = "https://bittrex.com/api/v1.1/account/getbalance?apikey=" + apiKey + "&currency=" + tradeCurrency + "&nonce=" + nonce2; 
