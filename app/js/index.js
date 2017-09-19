@@ -254,7 +254,7 @@ function sleep(ms) {
 
 async function runAlgorithm() {
 	while(runAlgo){
-		Algorithm.algo()
+		Algorithm.algorithm()
 		await sleep(100);
 	}
 

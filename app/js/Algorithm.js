@@ -1,4 +1,4 @@
-async function algo() {
+async function algorithm() {
 
     console.log("hi im the algorithm");
     
@@ -6,4 +6,4 @@ async function algo() {
 
 }
 
-module.exports.algo = algo;
+module.exports.algorithm = algorithm;
