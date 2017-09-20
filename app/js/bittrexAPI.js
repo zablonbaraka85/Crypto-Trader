@@ -2,8 +2,7 @@
 jsSHA = require("jssha");
 
 
-
-function cancelOrder(apiKey, secretKey, orderUUID){
+function cancelOrder(apiKey, secretKey, orderUUID, callback){
 	var nonce = getNonce();
 	getSignedJSON("https://bittrex.com/api/v1.1/market/cancel?apikey=" + apiKey + "&uuid=" + orderUUID + "&nonce=" + nonce, "", "", true,
 		function(err,data) {

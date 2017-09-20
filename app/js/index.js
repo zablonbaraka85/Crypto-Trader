@@ -1,7 +1,7 @@
-const path = require('path')
+const path = require('path');
 jsSHA = require("jssha");
 bittrexAPI = require(path.join(__dirname, './js/bittrexAPI.js'));
-Algorithm = require(path.join(__dirname, './js/Algorithm.js'));
+algorithm = require(path.join(__dirname, './js/algorithm.js'));
 
 
 
@@ -254,7 +254,7 @@ function sleep(ms) {
 
 async function runAlgorithm() {
 	while(runAlgo){
-		Algorithm.algorithm()
+		algorithm.algorithm()
 		await sleep(100);
 	}
 
