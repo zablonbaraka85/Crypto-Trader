@@ -254,6 +254,7 @@ function sleep(ms) {
 
 async function runAlgorithm() {
 	while(runAlgo){
+		isRunning = true;
 		algorithm.algorithm()
 		await sleep(100);
 	}
@@ -261,9 +262,8 @@ async function runAlgorithm() {
 }
 
 function setAlgorithm(status){
-	runAlgo = Boolean(status)
+	runAlgo = Boolean(status);
 	runAlgorithm();	
-	console.log("hi");
 }
 
 function updateBuySellInfo(baseCurrency, tradeCurrency){
