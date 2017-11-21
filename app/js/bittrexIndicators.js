@@ -13,40 +13,96 @@ function simpleMovingAverage(duration, ticker) {
 	if(SMA != 0) return SMA;
 };
 
-var AverageSold = 0;
-function getAverageSold(duration, ticker) {
-	bittrexAPI.getMarketHistory(ticker, function(err, data) {
-		var sum = 0;
-		var counted = 0;
-		while(counted <= duration){
-			if(data.result[i].OrderType == "SELL") {
-				sum += data.result[i].Price;
-				counted++;
+var AverageSellPrice = 0;
+function getAverageSellPrice(duration, ticker, isTime) {
+	if(isTime){
+		// TO BE IMPLEMENTED
+		return 0;
+	}else{
+		bittrexAPI.getMarketHistory(ticker, function(err, data) {
+			var sum = 0;
+			var counted = 0;
+			while(counted <= duration){
+				if(data.result[counted].OrderType == "SELL") {
+					sum += data.result[counted].Price;
+				}
 			}
-
-		}
-	});
-	if(AverageSold != 0) return AverageSold;
+			AverageSellPrice = sum / duration;
+		});
+		return AverageSellPrice;
+	}
 }
 
-var AverageBought = 0;
-function getAverageBuy(duration, ticker) {
-	bittrexAPI.getMarketHistory(ticker, function(err, data) {
-		var sum = 0;
-		var counted = 0;
-		while(counted <= duration){
-			if(data.result[i].OrderType == "BUY") {
-				sum += data.result[i].Price;
+var AverageBuyPrice = 0;
+function getAverageBuyPrice(duration, ticker, isTime) {
+	if(isTime){
+		// TO BE IMPLEMENTED
+		return 0;
+	} else {
+		bittrexAPI.getMarketHistory(ticker, function(err, data) {
+			var sum = 0;
+			var counted = 0;
+			while(counted <= duration){
+				if(data.result[counted].OrderType == "BUY") {
+					sum += data.result[counted].Price;
+				}
 				counted++;
 			}
-		}
-	});
-	if(AverageBought != 0) return AverageBought;
+			AverageBuyPrice = sum / duration;
+		});
+		return AverageBuyPrice;
+	}
 }
+
+var AverageSellVolume = 0;
+function getAverageSellVolume(duration, ticker, isTime) {
+	if(isTime) {
+		// TO BE IMPLEMENTED
+		return 0;
+	}else {
+		bittrexAPI.getMarketHistory(ticker, function(err, data) {
+			var sum = 0;
+			var counted = 0;
+			while(counted <= duration) {
+				if(data.result[counted].OrderType == "SELL") {
+					sum += data.result[counted].Quantity;
+				}
+				counted++;
+			}
+			AverageSellVolume = sum / duration;
+		});
+		return AverageSellVolume;
+	}
+}
+
+var AverageBuyVolume = 0;
+function getAverageBuyVolume(duration, ticker, isTime) {
+	if(isTime) {
+		// TO BE IMPLEMENTED
+		return 0;
+	} else {
+		bittrexAPI.getMarketHistory(ticker, function(err, data) {
+			var sum = 0;
+			var counted = 0;
+			while(counted <= duration) {
+				if(data.result[counted].OrderType == "BUY") {
+					sum += data.result[counted].Quantity;
+				}
+				counted++;
+			}
+			AverageBuyVolume = sum / duration;
+		});
+		return AverageBuyVolume;
+	}
+} 
 
 
 module.exports = {
 	simpleMovingAverage: simpleMovingAverage,
+	getAverageBuyPrice: getAverageBuyPrice,
+	getAverageSellPrice: getAverageSellPrice,
+	getAverageSellVolume: getAverageSellVolume,
+	getAverageBuyVolume: getAverageBuyVolume
 }
 
 

@@ -26,8 +26,6 @@ function updateOrderBook(){
 }
 
 
-
-
 // Set Globals
 // Fake keys!
 var apiKeyString 		= "b3cb84d40a544d33a2b2ac1a9f6c9686"; 
@@ -92,8 +90,8 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 	shaObj.update(uri);
 	var hash = shaObj.getHMAC("HEX");
 
-	console.log(uri);
-	console.log(hash);
+	//console.log(uri);
+	//console.log(hash);
 
 	
 	getSignedJSON(uri, hash,
@@ -133,7 +131,7 @@ function updateMyBalance(apiKey, secretKey, baseCurrency, tradeCurrency) {
 
 }
 
-function placeBuyOrder() {
+function placeBuyOrder() { // place order function
 	sendBuyOrder(apiKeyString, secretKeyString, tickerString, 
 		document.getElementById("buyPanelUnits").value,
 		document.getElementById("buyPanelPrice").value);
@@ -159,8 +157,8 @@ function openOrders(apiKey, secretKey, ticker) {
 	shaObj.update(uri);
 	var hash = shaObj.getHMAC("HEX");
 
-	console.log(uri);
-	console.log(hash);
+	//console.log(uri);
+	//console.log(hash);
 
 	getSignedJSON(uri, hash,
 		function(err, data) {
@@ -198,8 +196,8 @@ function sendBuyOrder(apiKey, secretKey, ticker, quantity, rate) {
 	var hash = shaObj.getHMAC("HEX");
 
 	// DEBUG
-	console.log(uri);
-	console.log(hash);
+	//console.log(uri);
+	//console.log(hash);
 	
 	getSignedJSON(uri, hash,
 		function(err, data){
@@ -226,8 +224,8 @@ function sendSellOrder(apiKey, secretKey, ticker, quantity, rate) {
 	var hash = shaObj.getHMAC("HEX");
 
 	// DEBUG
-	console.log(uri);
-	console.log(hash);
+	//console.log(uri);
+	//console.log(hash);
 
 	getSignedJSON(uri, hash,
 		function(err, data) {
