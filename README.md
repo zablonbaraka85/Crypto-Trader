@@ -1,12 +1,17 @@
 # Welcome to the Crypto-Trader wiki!
 Crypto-Trader is an algorithmic trading platform where anyone can code their own trading algorithms and run them with ease.
 
+## Requirements:
+- nodeJS
+
 ## How to Use:
 1. Create an account with a supported crypto-currency exchange.
 2. Create API secret keys for the account on the respective exchange.
-3. Code your trading algorithm in the algorithm.js file using the applied JavaScript API built into the repo.
-4. Run Crypto-Trader: $npm start
-5. Click on the algorithm tab and click start!
+3. Clone the repo into a directory.
+4. In the project directory, run $npm install
+5. Code your trading algorithm in the algorithm.js file using the applied JavaScript API built into the repo.
+6. Run $npm start.
+7. Click on the algorithm tab and click start.
 
 ## Algorithmic Trading Development Tools:
 
