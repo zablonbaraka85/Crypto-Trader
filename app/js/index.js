@@ -28,8 +28,8 @@ function updateOrderBook(){
 
 // Set Globals
 // Fake keys!
-var apiKeyString 		= "b3cb84d40a544d33a2b2ac1a9f6c9686"; 
-var secretKeyString		= "4191eabee1294637bb1a6e2fc20a713c";
+var apiKeyString 		= ""; //Insert Keys Here 
+var secretKeyString		= ""; //Insert Keys Here
 var tickerString 		= "btc-eth";
 var baseCurrencyString 	= tickerString.substring(0, tickerString.indexOf('-'));
 var tradeCurrencyString = tickerString.substring(tickerString.indexOf('-') + 1);
